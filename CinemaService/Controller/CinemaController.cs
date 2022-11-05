@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CinemaService.Controller
 {
-    [ApiController]
     [Route("api/v1/cinema")]
+    [ApiController]
+    
     public class CinemaController : ControllerBase
     {
         private readonly ICinemaService _cinemaService;
@@ -27,6 +28,13 @@ namespace CinemaService.Controller
         {
             _cinemaService.Delete(id);
             return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Update([FromRoute]int id, [FromBody] UpdateCinemaDto dto)
+        {
+            _cinemaService.Update(id, dto);
+            return Ok();
         }
     }
 

@@ -1,6 +1,8 @@
-﻿namespace CinemaService.Entities
+﻿using CinemaService.Entities;
+
+namespace CinemaService.Models
 {
-    public class Cinema
+    public class CinemaDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -8,11 +10,9 @@
         public string Rank { get; set; }
         public string ContactEmail { get; set; }
         public string ContactNumber { get; set; }
-
-        public int AddressId { get; set; }
-
-        public virtual List<Movie> Movies { get; set; }
-
-        public virtual Address Address { get; set; }
+        public string City { get; set; }
+        public string Street { get; set; }
+        public string PostalCode { get; set; }
+        public List<Movie> Movies { get; set; }
     }
 }

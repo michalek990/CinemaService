@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Globalization;
+using AutoMapper;
 using CinemaService.Entities;
+using CinemaService.Exceptions;
 using CinemaService.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,7 @@ namespace CinemaService.Service
     {
         public int Create(CreateCinemaDto dto);
         public void Delete(int id);
+        public void Update(int id,UpdateCinemaDto dto);
     }
 
     public class CinemaService : ICinemaService
@@ -35,7 +38,29 @@ namespace CinemaService.Service
             var cinema = _dbContext
                 .Cinema.FirstOrDefault(c => c.Id == id);
 
+            if (cinema == null)
+            {
+                throw new NotFoundException("Cinema not found");
+            }
+
             _dbContext.Cinema.Remove(cinema);
+            _dbContext.SaveChanges();
+        }
+
+        public void Update(int id, UpdateCinemaDto dto)
+        {
+            var cinema = _dbContext
+                .Cinema.FirstOrDefault(c => c.Id == id);
+
+            if (cinema == null)
+            {
+                throw new NotFoundException("Cinema not found");
+            }
+
+            cinema.Name = dto.Name;
+            cinema.Description = dto.Description;
+            cinema.Rank = dto.Rank;
+
             _dbContext.SaveChanges();
         }
     }
